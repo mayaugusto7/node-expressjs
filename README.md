@@ -18,7 +18,7 @@ npm start
 
 # folders estrutura
 .
-├── app.js
+├── app.js 
 ├── package.json
 ├── views
     └── *.jade
