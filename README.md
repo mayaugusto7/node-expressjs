@@ -3,6 +3,31 @@
 # cli express
 npm install -g express-generator
 
+# dependencias
+npm install -g compression
+npm install -g morgan
+npm install -g connect-timeout
+npm install -g method-override
+npm install -g response-time
+npm install -g serve-favicon
+npm install -g serve-index
+npm install -g vhost
+npm install -g connect-busboy
+npm install -g errorhandler
+
+# ----
+
+npm install compression --save -dev
+npm install morgan --save -dev
+npm install connect-timeout --save -dev
+npm install method-override --save -dev
+npm install response-time --save -dev
+npm install serve-favicon --save -dev
+npm install serve-index --save -dev
+npm install vhost --save -dev
+npm install connect-busboy --save -dev
+npm install errorhandler --save -dev
+
 # create a new project
 express name_project
 
