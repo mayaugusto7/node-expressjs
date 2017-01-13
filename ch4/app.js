@@ -33,7 +33,7 @@ app.use(responseTime(4));
 app.use(favicon(path.join('public', 'favicon.ico')));
 
 // Aplicando Middleware
-app.use('/shared', serverIndex(path.join('public', 'shared'), {icons: true}));
+app.use('/shared', serveIndex(path.join('public', 'shared'), {icons: true}));
 app.use(express.static(__dirname + '/public'));
 
 // Defindo rotas 'routes'

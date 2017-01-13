@@ -14,6 +14,7 @@ npm install -g serve-index
 npm install -g vhost
 npm install -g connect-busboy
 npm install -g errorhandler
+npm install -g express jade
 
 # ----
 
@@ -27,6 +28,7 @@ npm install serve-index --save -dev
 npm install vhost --save -dev
 npm install connect-busboy --save -dev
 npm install errorhandler --save -dev
+npm install --save -dev express jade
 
 # create a new project
 express name_project
