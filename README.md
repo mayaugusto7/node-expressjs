@@ -15,6 +15,8 @@ npm install -g vhost
 npm install -g connect-busboy
 npm install -g errorhandler
 npm install -g express jade
+npm install -g consolidate 
+npm install -g swig 
 
 # ----
 
@@ -29,6 +31,8 @@ npm install vhost --save -dev
 npm install connect-busboy --save -dev
 npm install errorhandler --save -dev
 npm install --save -dev express jade
+npm install consolidate --save -dev
+npm install swig --save -dev
 
 # create a new project
 express name_project
