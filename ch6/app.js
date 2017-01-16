@@ -34,6 +34,8 @@ var findUserByUsername = function(username, callback) {
      return callback(null, users[username]);
 };
 
+// The v1 routes
+
 app.get('/v1/users/:username', function(request, response, next) {
     
     var username = request.params.username;
@@ -55,6 +57,53 @@ app.get('/v1/admin/:username', function(request, response, next) {
         return response.render('admin', user);
     });
 
+});
+
+// The v2 routes that use the custom middleware
+
+var findUserByUsernameMiddleware = function(request, response, next) {
+
+    if(request.params.username) {
+        console.log('Username param was detected: ', request.params.username);
+
+        findUserByUsername(request.params.username, function(error, user) {
+            if (error) return next(error);
+            
+            request.user = user;
+            return next();
+        });
+ 
+    } else {
+        return next();
+    }
+
+};
+
+app.get('/v2/users/:username', findUserByUsernameMiddleware, function(request, response, next) {
+    return response.render('user', request.user);
+});
+
+app.get('/v2/admin/:username', findUserByUsernameMiddleware, function(request, response, next) {
+    return response.render('admin', request.user)
+});
+
+// The v3 routes app.param()
+app.param('v3Username', function(request, response, next, username) {
+    console.log('Username param was is detected: ', username);
+    findUserByUsername(username, function(error, user) {
+        if (error) return next(error);
+
+        request.user = user;
+        return next();
+    });
+});
+
+app.get('/v3/users/:v3Username', function(request, response, next) {
+    return response.render('user', request.user);
+});
+
+app.get('/v3/admin/:v3Username', function(request, response, next) {
+    return response.render('admin', request.user);
 });
 
 // Boot Sever
