@@ -29,16 +29,16 @@ app.use('/users', users);
 /**
  * req.query
  */
-app.get('/search', function(req, res) {
+app.get('/search', function (req, res) {
   console.log(req.query)
-  res.end(JSON.stringify(req.query)+'\r\n');
+  res.end(JSON.stringify(req.query) + '\r\n');
 });
 
 /**
  * req.params
  * imprime os parametros que foram inputados eviados 
  */
-app.get('/params/:role/:name/:status', function(req, res) {
+app.get('/params/:role/:name/:status', function (req, res) {
   console.log(req.params);
   res.end();
 });
@@ -47,7 +47,7 @@ app.get('/params/:role/:name/:status', function(req, res) {
  * req.body
  * imprime o corpo da requisicao como resposta
  */
-app.post('/body', function(req, res) {
+app.post('/body', function (req, res) {
   console.log(req.body);
   res.end(JSON.stringify(req.body) + '\r\n');
 });
@@ -56,21 +56,47 @@ app.post('/body', function(req, res) {
  * req.route
  * Info rotas
  */
-app.get('/params/:role/:name/:status', function(req, res) {
+app.get('/params/:role/:name/:status', function (req, res) {
   console.log(req.params);
   console.log(req.route);
   res.end();
 });
 
+/**
+ * req.cookies
+ * Info cookie
+ */
+app.get('/cookies', function (req, res) {
+  if (!req.cookies.counter)
+    res.cookie('counter', 0);
+  else
+    res.cookie('counter', parseInt(req.cookies.counter, 10) + 1);
+  res.status(200).send(req.cookies);
+});
+
+/**
+ * req.signedCookies
+ */
+app.use(cookieParser('abc'));
+// ... Other middleware
+app.get('/signed-cookies', function (req, res) {
+  if (!req.signedCookies.counter)
+    res.cookie('counter', 0, { signed: true });
+  else
+    res.cookie('counter', parseInt(req.signedCookies.counter, 10) + 1, { signed: true });
+  res.status(200).send('cookies are: ', req.signedCookies);
+});
+// ...
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
