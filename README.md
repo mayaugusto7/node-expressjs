@@ -17,6 +17,9 @@ npm install -g errorhandler
 npm install -g express jade
 npm install -g consolidate 
 npm install -g swig 
+npm install -g debug
+npm install -g  body-parser
+npm install -g cookie-parser
 
 # ----
 
@@ -33,6 +36,8 @@ npm install errorhandler --save -dev
 npm install --save -dev express jade
 npm install consolidate --save -dev
 npm install swig --save -dev
+npm install debug --save -dev
+npm install body-parser --save -dev
 
 # create a new project
 express name_project
