@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -84,6 +85,33 @@ app.get('/json', function (req, res) {
   { title: 'JavaScript: The Good Parts', tags: 'javascript' }]);
 });
 
+app.get('/non-stream', function(req, res) {
+  var file = fs.readFileSync(largeImagePath);
+  res.end(file);
+});
+
+app.get('/non-stream2', function(req, res) {
+  var file = fs.readFile(largeImagePath, function(error, data) {
+    res.end(data);
+  });
+});
+
+app.get('/stream', function(req, res) {
+  var stream = fs.createReadStream(largeImagePath);
+  stream.pipe(res);
+});
+
+app.get('/stream2', function(req, res) {
+  var stram = fs.createReadStream(largeImagePath);
+  stream.on('data', function(data) {
+    res.write(data);
+  });
+
+  stream.on('end', function() {
+    res.end();
+  });
+});
+
 /***
  * Resposta json file consumer service
  */
@@ -101,10 +129,10 @@ app.get('/', function (req, res) {
   { title: 'JavaScript: The Good Parts', tags: 'javascript' }]);
 });
 
-res.redirect('/admin');
-res.redirect('../users');
-res.redirect('http://rapidprototypingwithjs.com');
-res.redirect(301, 'http://rpjs.co');
+//res.redirect('/admin');
+//res.redirect('../users');
+//res.redirect('http://rapidprototypingwithjs.com');
+//res.redirect(301, 'http://rpjs.co');
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
